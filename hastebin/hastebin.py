@@ -22,14 +22,14 @@ class HastebinCog(commands.Cog):
             ) as resp:
                 key = (await resp.json())["key"]
                 embed = Embed(
-                    title="MinerLins HasteBin:",
+                    title="Your uploaded file",
                     color=self.bot.main_color,
                     description=f"{haste_url}/" + key,
                 )
         except (JSONDecodeError, ClientResponseError, IndexError):
             embed = Embed(
                 color=self.bot.main_color,
-                description="**MinerLins**: Something wen't wrong!"
+                description="**MinerLins**: Something went wrong. "
                 "**MinerLins**: We're unable to upload your text to hastebin.",
             )
             embed.set_footer(text="Hastebin Plugin")
