@@ -80,7 +80,7 @@ class ReportUser(commands.Cog):
             {"_id": "config"}, {"$set": {"channel": str(channel.id)}}, upsert=True
         )
         self.channel = str(channel.id)
-        await ctx.send("Done!")
+        await ctx.send("**MinerLins**: Report channel has been set!")
 
     @ru.command()
     @checks.has_permissions(PermissionLevel.ADMIN)
@@ -92,7 +92,7 @@ class ReportUser(commands.Cog):
             {"_id": "config"}, {"$set": {"message": msg}}, upsert=True
         )
         self.message = msg
-        await ctx.send("Done!")
+        await ctx.send("**MinerLins**: Report channel has been set!")
 
     @commands.command()
     async def report(
@@ -149,7 +149,7 @@ class ReportUser(commands.Cog):
         case = await self.db.find_one({"case": casen})
 
         if case is None:
-            await ctx.send(f"**MinerLins**: Case `#{casen}` dose'nt exist")
+            await ctx.send(f"**MinerLins**: Case `#{casen}` does not exist")
             return
         else:
             user1: discord.User = await self.bot.fetch_user(int(case["author"]))
@@ -205,10 +205,10 @@ class ReportUser(commands.Cog):
                 and payload.channel_id == messge.channel.id
             )
 
-        await channel.send("**REPORT HAS BEEN MARKED AS SOLVED**:\nType a message we should send to the person who reproted this user! **Hint**: __We took care of this user!__")
+        await channel.send("**MinerLins**: Type a message to send to the user who executed the !report command.")
         reportr = await self.bot.wait_for("message", check=check)
         user1 = self.bot.get_user(int(casedb["author"]))
-        await user1.send(f"**Reply From Staff Team:**\n{reportr.content}")
+        await user1.send(f"**Report Information:**\n{reportr.content}")
         await channel.send("**MinerLins**: Message sent to the user!")
         await self.db.find_one_and_update({"case": case}, {"$set": {"resolved": True}})
         return
