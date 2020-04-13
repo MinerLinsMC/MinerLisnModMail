@@ -107,7 +107,7 @@ class ReportUser(commands.Cog):
 
         if self.channel is None:
             await ctx.message.delete()
-            await ctx.author.send("**MinerLins**: `!ru channel <channel-name/id>` \n**ERROR**\nPlease setup the reports channel!")
+            await ctx.author.send("**MinerLins**: Please setup the report channel!")
             return
         else:
             channel: discord.TextChannel = self.bot.get_channel(int(self.channel))
