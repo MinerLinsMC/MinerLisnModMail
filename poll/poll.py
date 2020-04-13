@@ -38,7 +38,7 @@ class Polls(commands.Cog):
         perms = ctx.channel.permissions_for(ctx.me)
         if not perms.add_reactions:
             return await ctx.send(
-                "Need Add Reactions permissions."
+                "**MinerLins**: Bot requries add reactions permissions!"
             )
 
         # a list of messages to delete when we're all done
@@ -55,7 +55,7 @@ class Polls(commands.Cog):
         for i in range(20):
             messages.append(
                 await ctx.send(
-                    f"Say a Poll option or {ctx.prefix}done to publish the Poll."
+                    f"**MinerLins**: Enter a poll option. When you are all done type {ctx.prefix}done!"
                 )
             )
 
@@ -86,7 +86,7 @@ class Polls(commands.Cog):
     @start.error
     async def poll_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
-            return await ctx.send("Missing the question.")
+            return await ctx.send("**MinerLins**: Please provide a poll question!")
 
     @poll.command()
     @commands.guild_only()
@@ -101,16 +101,16 @@ class Polls(commands.Cog):
         """
 
         if len(questions_and_choices) == 0:
-            return await ctx.send("You need to specify a question.")
+            return await ctx.send("**MinerLins**: You must specify a question!")
         elif len(questions_and_choices) == 2:
-            return await ctx.send("You need at least 2 choices.")
+            return await ctx.send("**MinerLins**: A poll has 2 or more questions! Please provide another question!")
         elif len(questions_and_choices) > 21:
-            return await ctx.send("You can only have up to 20 choices.")
+            return await ctx.send("**MinerLins**: Maximum ammount has been reached!")
 
         perms = ctx.channel.permissions_for(ctx.me)
         if not perms.add_reactions:
             return await ctx.send(
-                "Need Add Reactions permissions."
+                "**MinerLins**: Bot requries add reactions permissions!"
             )
         try:
             await ctx.message.delete()
