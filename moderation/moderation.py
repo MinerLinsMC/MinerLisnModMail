@@ -63,12 +63,12 @@ class ModerationPlugin(commands.Cog):
         config = await self.db.find_one({"_id": "config"})
 
         if config is None:
-            return await ctx.send("There's no configured log channel.")
+            return await ctx.send("**MinerLins**: There's no configured log channel.")
         else:
             channel = ctx.guild.get_channel(int(config["channel"]))
 
         if channel is None:
-            await ctx.send("There is no configured log channel.")
+            await ctx.send("**MinerLins**: There is no configured log channel.")
             return
 
         try:
@@ -79,7 +79,7 @@ class ModerationPlugin(commands.Cog):
 
                 embed = discord.Embed(
                     color=discord.Color.red(),
-                    title=f"{member} was banned!",
+                    title=f"**MinerLins**: **{member}** was banned from the server!",
                     timestamp=datetime.datetime.utcnow(),
                 )
 
@@ -90,15 +90,15 @@ class ModerationPlugin(commands.Cog):
                 if reason:
                     embed.add_field(name="Reason", value=reason, inline=False)
 
-                await ctx.send(f"🚫 | {member} is banned!")
+                await ctx.send(f"**MinerLins**: **{member}** is banned!")
                 await channel.send(embed=embed)
 
         except discord.Forbidden:
-            await ctx.send("I don't have the proper permissions to ban people.")
+            await ctx.send("**MinerLins**: I don't have the proper permissions to ban people. Oof!")
 
         except Exception as e:
             await ctx.send(
-                "An unexpected error occurred, please check the logs for more details."
+                "**MinerLins**: An unexpected error occurred, please check the logs for more details."
             )
             logger.error(e)
             return
@@ -117,12 +117,12 @@ class ModerationPlugin(commands.Cog):
         config = await self.db.find_one({"_id": "config"})
 
         if config is None:
-            return await ctx.send("There's no configured log channel.")
+            return await ctx.send("**MinerLins**: There's no configured log channel.")
         else:
             channel = ctx.guild.get_channel(int(config["channel"]))
 
         if channel is None:
-            await ctx.send("There is no configured log channel.")
+            await ctx.send("**MinerLins**: There is no configured log channel.")
             return
 
         try:
@@ -130,7 +130,7 @@ class ModerationPlugin(commands.Cog):
                 await member.kick(reason=f"{reason if reason else None}")
                 embed = discord.Embed(
                     color=discord.Color.red(),
-                    title=f"{member} was kicked!",
+                    title=f"**MinerLins**: **{member}** was kicked from the server!",
                     timestamp=datetime.datetime.utcnow(),
                 )
 
@@ -141,15 +141,15 @@ class ModerationPlugin(commands.Cog):
                 if reason is not None:
                     embed.add_field(name="Reason", value=reason, inline=False)
 
-                await ctx.send(f"🦶 | {member} is kicked!")
+                await ctx.send(f"**MinerLins**: **{member}** is kicked!")
                 await channel.send(embed=embed)
 
         except discord.Forbidden:
-            await ctx.send("I don't have the proper permissions to kick people.")
+            await ctx.send("**MinerLins**: I don't have the proper permissions to kick people.")
 
         except Exception as e:
             await ctx.send(
-                "An unexpected error occurred, please check the Heroku logs for more details."
+                "**MinerLins**: An unexpected error occurred, please check the Heroku logs for more details."
             )
             logger.error(e)
             return
@@ -163,12 +163,12 @@ class ModerationPlugin(commands.Cog):
         """
 
         if member.bot:
-            return await ctx.send("Bots can't be warned.")
+            return await ctx.send("**MinerLins**: Bots can't be warned.")
 
         channel_config = await self.db.find_one({"_id": "config"})
 
         if channel_config is None:
-            return await ctx.send("There's no configured log channel.")
+            return await ctx.send("**MinerLins**: There's no configured log channel.")
         else:
             channel = ctx.guild.get_channel(int(channel_config["channel"]))
 
@@ -196,7 +196,7 @@ class ModerationPlugin(commands.Cog):
             {"_id": "warns"}, {"$set": {str(member.id): userw}}, upsert=True
         )
 
-        await ctx.send(f"Successfully warned **{member}**\n`{reason}`")
+        await ctx.send(f"**MinerLins**: Successfully warned **{member}**\n`{reason}`")
 
         await channel.send(
             embed=await self.generateWarnEmbed(
@@ -215,12 +215,12 @@ class ModerationPlugin(commands.Cog):
         """
 
         if member.bot:
-            return await ctx.send("Bots can't be warned, so they can't be pardoned.")
+            return await ctx.send("**MinerLins**: Bots can't be warned, so they can't be pardoned.")
 
         channel_config = await self.db.find_one({"_id": "config"})
 
         if channel_config is None:
-            return await ctx.send("There's no configured log channel.")
+            return await ctx.send("**MinerLins**: There's no configured log channel.")
         else:
             channel = ctx.guild.get_channel(int(channel_config["channel"]))
 
@@ -235,16 +235,16 @@ class ModerationPlugin(commands.Cog):
         try:
             userwarns = config[str(member.id)]
         except KeyError:
-            return await ctx.send(f"{member} doesn't have any warnings.")
+            return await ctx.send(f"**MinerLins**: **{member}** doesn't have any warnings.")
 
         if userwarns is None:
-            await ctx.send(f"{member} doesn't have any warnings.")
+            await ctx.send(f"**MinerLins**: **{member}** doesn't have any warnings.")
 
         await self.db.find_one_and_update(
             {"_id": "warns"}, {"$set": {str(member.id): []}}
         )
 
-        await ctx.send(f"Successfully pardoned **{member}**\n`{reason}`")
+        await ctx.send(f"**MinerLins**: Successfully pardoned **{member}**\n`{reason}`")
 
         embed = discord.Embed(color=discord.Color.blue())
 
