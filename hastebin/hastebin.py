@@ -23,7 +23,7 @@ class HastebinCog(commands.Cog):
                 key = (await resp.json())["key"]
                 embed = Embed(
                     title="MinerLins HasteBin:",
-                    footer="Hastebin Uploaded!"
+                    footer="Hastebin Uploaded!",
                     color=self.bot.main_color,
                     description=f"{haste_url}/" + key,
                 )
