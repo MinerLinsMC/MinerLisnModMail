@@ -44,8 +44,8 @@ class ReactToContact(commands.Cog):
             channel = sl[-2]
 
             await ctx.send(
-                "React to this message with the emoji."
-                " `(The reaction should also be on the message or it won't work.)`"
+                "**MinerLins**: React to this message with the emoji."
+                "`(The reaction should also be on the message or it won't work.)`"
             )
             reaction, user = await self.bot.wait_for("reaction_add", check=check)
 
@@ -63,7 +63,7 @@ class ReactToContact(commands.Cog):
             await ctx.send("Done!")
 
         else:
-            await ctx.send("Please give a valid message link")
+            await ctx.send("**MinerLins**: Please give a valid message link")
             return
 
     @commands.Cog.listener()
