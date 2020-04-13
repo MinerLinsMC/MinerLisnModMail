@@ -18,16 +18,16 @@ class QuotePlugin(commands.Cog):
             try:
                 message = await channel.fetch_message(int(message_id))
             except discord.NotFound:
-                await ctx.send(self.i18n.get("MESSAGE_NOT_FOUND"))
+                await ctx.send(self.i18n.get("**MinerLins**: Message was not found!"))
                 return
             except discord.Forbidden:
-                await ctx.send(self.i18n.get("FORBIDDEN"))
+                await ctx.send(self.i18n.get("**Minerlins**: Forbidden!"))
                 return
             except:
-                await ctx.send(self.i18n.get("ERROR"))
+                await ctx.send(self.i18n.get("**MinerLins**: An unknown error has occured!"))
                 return
         except KeyNotFoundError:
-            await ctx.send("Seems Like the command isn't localised for your language yet.")
+            await ctx.send("**MinerLins**: Seems like the command isn't localized for your language yet!")
             return
 
 
