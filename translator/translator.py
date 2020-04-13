@@ -48,9 +48,9 @@ class TranslatePlugin(commands.Cog):
             embed.description = tmsg.text
             await ctx.channel.send(embed=embed)
         except NotFound:
-            await ctx.send("The provided message Was not found.")
+            await ctx.send("**MinerLins**: The provided message Was not found.")
         except HTTPException:
-            await ctx.send("Failed to retrieve the message.")
+            await ctx.send("**MinerLins**: Failed to retrieve the message.")
 
     @commands.command(aliases=["tt"])
     async def translatetext(self, ctx, *, message):
@@ -66,7 +66,7 @@ class TranslatePlugin(commands.Cog):
     async def auto_translate_thread(self, ctx):
         """Turn on auto translations for the ongoing thread."""
         if "User ID:" not in ctx.channel.topic:
-            await ctx.send("The channel is not a modmail thread")
+            await ctx.send("**MinerLins**: The channel is not a modmail thread")
             return
         if ctx.channel.id in self.tt:
             self.tt.remove(ctx.channel.id)
