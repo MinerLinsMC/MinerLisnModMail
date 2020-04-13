@@ -25,7 +25,6 @@ class HastebinCog(commands.Cog):
                     title="MinerLins HasteBin:",
                     color=self.bot.main_color,
                     description=f"{haste_url}/" + key,
-                    footer="Hastebin Uploaded!",
                 )
         except (JSONDecodeError, ClientResponseError, IndexError):
             embed = Embed(
