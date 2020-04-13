@@ -86,7 +86,7 @@ class WarnPlugin(commands.Cog):
             {"_id": "warns"}, {"$set": {str(member.id): userw}}, upsert=True
         )
 
-        await ctx.send(f"Successfully warned **{member}**\n`{reason}`")
+        await ctx.send(f"Successfully warned **{member}** for {reason}.")
 
         await channel.send(
             embed=await self.generateWarnEmbed(
@@ -134,7 +134,7 @@ class WarnPlugin(commands.Cog):
             {"_id": "warns"}, {"$set": {str(member.id): []}}
         )
 
-        await ctx.send(f"**MinerLins**: You successfully pardoned __{member}__\n**REASON**:`{reason}`")
+        await ctx.send(f"**MinerLins**: You successfully pardoned __{member}__!`")
 
         embed = discord.Embed(color=discord.Color.blue())
 
