@@ -45,10 +45,10 @@ class Suggest(commands.Cog):
                 config = await self.coll.find_one({"_id": "config"})
                 if config is None:
                     embed = discord.Embed(
-                        title="Suggestion channel not set.", color=self.bot.error_colour
+                        title="**MinerLins**: Suggestion channel not set.", color=self.bot.error_colour
                     )
-                    embed.set_author(name="Error.")
-                    embed.set_footer(text="Task failed successfully.")
+                    embed.set_author(name="**MinerLins**: Error.")
+                    embed.set_footer(text="**MinerLins**: Task failed successfully.")
                     await ctx.send(embed=embed)
                 else:
                     suggestion_channel = self.bot.get_channel(
@@ -105,7 +105,7 @@ class Suggest(commands.Cog):
     @checks.has_permissions(PermissionLevel.MOD)
     @commands.group(invoke_without_command=True)
     async def suggestmod(self, ctx: commands.Context):
-        """Let's you block and unblock people from using the suggest command."""
+        """**MinerLins** - Let's you block and unblock people from using the suggest command."""
         await ctx.send_help(ctx.command)
 
     @suggestmod.command(aliases=["ban"])
@@ -139,7 +139,7 @@ class Suggest(commands.Cog):
     @checks.has_permissions(PermissionLevel.MOD)
     async def unblock(self, ctx, user: discord.User):
         """
-        Unblock a user from using the suggest command.
+        **MinerLins** - Unblock a user from using the suggest command.
 
         **Examples:**
         [p]suggestmod unblock @RealCyGuy
