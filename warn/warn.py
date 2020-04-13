@@ -53,12 +53,12 @@ class WarnPlugin(commands.Cog):
         """
 
         if member.bot:
-            return await ctx.send("Bots can't be warned.")
+            return await ctx.send("**MinerLins**: You can't warn a bot!")
 
         channel_config = await self.db.find_one({"_id": "config"})
 
         if channel_config is None:
-            return await ctx.send("There's no configured log channel.")
+            return await ctx.send("**MinerLins**: There's no configured log channel.")
         else:
             channel = ctx.guild.get_channel(int(channel_config["channel"]))
 
@@ -105,12 +105,12 @@ class WarnPlugin(commands.Cog):
         """
 
         if member.bot:
-            return await ctx.send("Bots can't be warned, so they can't be pardoned.")
+            return await ctx.send("**MinerLins**: You can't pardon a bot!")
 
         channel_config = await self.db.find_one({"_id": "config"})
 
         if channel_config is None:
-            return await ctx.send("There's no configured log channel.")
+            return await ctx.send("**MinerLins**: There is no configuration channel!")
         else:
             channel = ctx.guild.get_channel(int(channel_config["channel"]))
 
@@ -125,16 +125,16 @@ class WarnPlugin(commands.Cog):
         try:
             userwarns = config[str(member.id)]
         except KeyError:
-            return await ctx.send(f"{member} doesn't have any warnings.")
+            return await ctx.send(f"**MinerLins**: __{member}__ doesn't have any current warnings. Nice job!")
 
         if userwarns is None:
-            await ctx.send(f"{member} doesn't have any warnings.")
+            await ctx.send(f"**MinerLins**: __{member}__ doesn't have any current warnings. Nice job!")
 
         await self.db.find_one_and_update(
             {"_id": "warns"}, {"$set": {str(member.id): []}}
         )
 
-        await ctx.send(f"Successfully pardoned **{member}**\n`{reason}`")
+        await ctx.send(f"**MinerLins**: You successfully pardoned __{member}__\n**REASON**:`{reason}`")
 
         embed = discord.Embed(color=discord.Color.blue())
 
