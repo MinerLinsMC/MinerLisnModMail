@@ -17,7 +17,7 @@ class ReportUser(commands.Cog):
         self.db = bot.plugin_db.get_partition(self)
         self.blacklist = []
         self.channel = None
-        self.message = "Thanks for reporting, our Staff will look into it soon."
+        self.message = "**MinerLins**: You have successfully reported this user!"
         self.current_case = 1
         asyncio.create_task(self._set_config())
 
@@ -30,7 +30,7 @@ class ReportUser(commands.Cog):
             self.channel = config.get("channel", None)
             self.current_case = config.get("case", 1)
             self.message = config.get(
-                "message", "Thanks for reporting, our Staff will look into it soon."
+                "message", "**MinerLins**: You have successfully reported this user!"
             )
 
     async def update(self):
@@ -107,7 +107,7 @@ class ReportUser(commands.Cog):
 
         if self.channel is None:
             await ctx.message.delete()
-            await ctx.author.send("Reports Channel for the guild has not been set.")
+            await ctx.author.send("**MinerLins**: `!ru channel <channel-name/id>` \n**ERROR**\nPlease setup the reports channel!")
             return
         else:
             channel: discord.TextChannel = self.bot.get_channel(int(self.channel))
@@ -149,7 +149,7 @@ class ReportUser(commands.Cog):
         case = await self.db.find_one({"case": casen})
 
         if case is None:
-            await ctx.send(f"Case `#{casen}` dose'nt exist")
+            await ctx.send(f"**MinerLins**: Case `#{casen}` dose'nt exist")
             return
         else:
             user1: discord.User = await self.bot.fetch_user(int(case["author"]))
@@ -196,7 +196,7 @@ class ReportUser(commands.Cog):
             return
 
         if casedb["resolved"] is True:
-            await channel.send(f"Case `#{case}`Already resolved.")
+            await channel.send(f"**MinerLins**: You have already marked this case as resolved! **Case ID**: `#{case}`")
             return
 
         def check(messge: discord.Message):
@@ -205,11 +205,11 @@ class ReportUser(commands.Cog):
                 and payload.channel_id == messge.channel.id
             )
 
-        await channel.send("Enter Your Report which will be sent to the reporter")
+        await channel.send("**REPORT HAS BEEN MARKED AS SOLVED**:\nType a message we should send to the person who reproted this user! **Hint**: __We took care of this user!__")
         reportr = await self.bot.wait_for("message", check=check)
         user1 = self.bot.get_user(int(casedb["author"]))
         await user1.send(f"**Reply From Staff Team:**\n{reportr.content}")
-        await channel.send("DM'd")
+        await channel.send("**MinerLins**: Message sent to the user!")
         await self.db.find_one_and_update({"case": case}, {"$set": {"resolved": True}})
         return
 
