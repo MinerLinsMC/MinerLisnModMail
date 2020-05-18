@@ -84,7 +84,7 @@ class GiveawayPlugin(commands.Cog):
                 if len(message.reactions) <= 0:
                     embed = message.embeds[0]
                     embed.description = (
-                        f"Giveaway has ended!\n\nSadly no one participated :("
+                        f"**Miner | Rewards Club**: No one participated in this giveaway!"
                     )
                     embed.set_footer(
                         text=f"{giveaway['winners']} {'winners' if giveaway['winners'] > 1 else 'winner'} | Ended at"
@@ -104,7 +104,7 @@ class GiveawayPlugin(commands.Cog):
                         if len(reacted_users) <= 1:
                             embed = message.embeds[0]
                             embed.description = (
-                                f"Giveaway has ended!\n\nSadly no one participated :("
+                                f"**Miner | Rewards Club**: No one participated in this giveaway!"
                             )
                             embed.set_footer(
                                 text=f"{giveaway['winners']} {'winners' if giveaway['winners'] > 1 else 'winner'} | "
@@ -140,7 +140,7 @@ class GiveawayPlugin(commands.Cog):
                         )
                         await message.edit(embed=embed)
                         await channel.send(
-                            f"🎉 Congratulations {winners_text}, you have won **{giveaway['item']}**!"
+                            f"**Miner | Rewards Club**: Congratulations {winners_text}, you have won **{giveaway['item']}**!"
                         )
                         try:
                             self.active_giveaways.pop(str(giveaway["message"]))
@@ -159,7 +159,7 @@ class GiveawayPlugin(commands.Cog):
 
                 embed = message.embeds[0]
                 embed.description = (
-                    f"React with 🎉 to enter the giveaway!\n\n"
+                    f"**Miner | Rewards Club**\nReact with 🎉 to enter the giveaway!\n\n"
                     f"Time Remaining: **{time_remaining}**"
                 )
                 await message.edit(embed=embed)
@@ -201,7 +201,7 @@ class GiveawayPlugin(commands.Cog):
         def cancel_check(msg: discord.Message):
             return msg.content == "cancel" or msg.content == f"{ctx.prefix}cancel"
 
-        embed = discord.Embed(colour=0x00FF00)
+        embed = discord.Embed(colour=0x37a6e6)
 
         await ctx.send(embed=self.generate_embed("What is the giveaway item?"))
         giveaway_item = await self.bot.wait_for("message", check=check)
@@ -227,13 +227,13 @@ class GiveawayPlugin(commands.Cog):
 
         if giveaway_winners <= 0:
             await ctx.send(
-                "Giveaway can only be held with 1 or more winners. Cancelling command."
+                "**Miner | Rewards Club**: You can't run a giveaway if only one person can partake in it silly!"
             )
             return
 
         await ctx.send(
             embed=self.generate_embed(
-                "How long will the giveaway last?\n\n2d / 2days / 2day -> 2 days\n"
+                "**Miner | Rewards Club**\nHow long will the giveaway last?\n\n2d / 2days / 2day -> 2 days\n"
                 "2m -> 2 minutes\n2 months -> 2 months"
                 "\ntomorrow / in 10 minutes / 2h 10minutes work too\n"
             )
@@ -267,7 +267,7 @@ class GiveawayPlugin(commands.Cog):
             return
 
         embed.description = (
-            f"React with 🎉 to enter the giveaway!\n\n"
+            f"**Miner | Rewards Club**\nReact with 🎉 to enter the giveaway!\n\n"
             f"Time Remaining: **{datetime.fromtimestamp(giveaway_time).strftime('%d %H:%M:%S')}**"
         )
         embed.set_footer(
@@ -301,7 +301,7 @@ class GiveawayPlugin(commands.Cog):
 
         # Don't roll if giveaway is active
         if _id in self.active_giveaways:
-            await ctx.send("Sorry, but you can't reroll an active giveaway.")
+            await ctx.send("**Miner | Rewards Club**: This giveaway is still ongoing!")
             return
 
         async def get_random_user(users, _guild, _winners):
@@ -317,15 +317,15 @@ class GiveawayPlugin(commands.Cog):
         try:
             message = await ctx.channel.fetch_message(int(_id))
         except discord.Forbidden:
-            await ctx.send("No permission to read the history.")
+            await ctx.send("**Miner | Rewards Club**: No permission to read the message history for this channel!")
             return
         except discord.NotFound:
-            await ctx.send("Message not found.")
+            await ctx.send("**Miner | Rewards Club**: Message was not found.")
             return
 
         if not message.embeds or message.embeds[0] is None:
             await ctx.send(
-                "The given message doesn't have an embed, so it isn't related to a giveaway."
+                "**Miner | Rewards Club**: The given message doesn't have an embed, so it isn't related to a giveaway."
             )
             return
 
